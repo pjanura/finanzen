@@ -1,0 +1,1570 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ausgaben-Report – November 2025 (Retouren bis 60 Tage rückwirkend)</title>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --border: rgba(255,255,255,.10);
+      --text:#e9ecf7;
+      --muted: rgba(233,236,247,.7);
+      --accent:#7c3aed;
+      --shadow: 0 16px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% -5%, rgba(124,58,237,.45), transparent 55%),
+        radial-gradient(900px 500px at 85% 0%, rgba(59,130,246,.25), transparent 55%),
+        radial-gradient(1200px 900px at 50% 120%, rgba(16,185,129,.18), transparent 60%),
+        linear-gradient(180deg, #070a14, var(--bg));
+      min-height:100vh;
+    }
+    .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 42px}
+    header{
+      display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between;
+      margin-bottom:18px;
+    }
+    .title{display:flex;flex-direction:column;gap:6px}
+    h1{margin:0;font-size:28px;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:13px;line-height:1.35}
+    .badgeRow{display:flex;gap:10px;flex-wrap:wrap}
+    .badge{
+      padding:9px 12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius:999px;
+      font-size:12px;
+      color:var(--muted);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+      backdrop-filter: blur(10px);
+    }
+    .badge strong{color:var(--text);font-weight:650}
+
+    /* Layout */
+    .grid{
+      display:grid;
+      grid-template-columns: 300px 1fr 0.6fr;
+      gap:14px;
+      align-items:start;
+    }
+    @media (max-width: 1200px){
+      .grid{grid-template-columns: 280px 1fr 0.7fr}
+    }
+    @media (max-width: 930px){
+      .grid{grid-template-columns: 1fr}
+    }
+
+    /* Premium glass cards */
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(1200px 600px at 10% 0%, rgba(255,255,255,.08), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.035));
+      border-radius: var(--radius);
+      box-shadow:
+        0 18px 50px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.10);
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+    .card h2{margin:0;font-size:14px;letter-spacing:.2px;color:rgba(233,236,247,.88)}
+    .cardHead{
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .cardBody{padding:16px 16px}
+
+    /* Controls */
+    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .search{
+      flex:1;min-width:220px;
+      display:flex;align-items:center;gap:8px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;
+      background: rgba(0,0,0,.20);
+      padding:8px 12px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .search input{width:100%;background:transparent;border:0;outline:none;color:var(--text);font-size:13px}
+    .pill{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      padding:8px 10px;border-radius:999px;
+      font-size:12px;display:flex;gap:8px;align-items:center;
+      cursor:pointer; user-select:none;
+      transition:.15s transform ease, .15s background ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    .pill:hover{transform: translateY(-1px); background: rgba(255,255,255,.06);}
+    .pill input{accent-color: var(--accent)}
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      color: var(--text);
+      padding:9px 12px;border-radius:12px;
+      cursor:pointer;
+      transition:.15s transform ease, .15s background ease, .15s border-color ease;
+      font-size:12px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+      border-color: rgba(255,255,255,.16);
+    }
+    .mini{color:var(--muted);font-size:12px}
+    .hr{height:1px;background:rgba(255,255,255,.10);margin:12px 0}
+    .foot{margin-top:14px;color:rgba(233,236,247,.55);font-size:12px;line-height:1.5}
+
+    /* KPIs */
+    .kpiRow{display:grid;grid-template-columns: repeat(3, minmax(0,1fr));gap:12px;margin-bottom:14px}
+    @media (max-width:650px){.kpiRow{grid-template-columns:1fr}}
+    .kpi{
+      background:
+        radial-gradient(700px 240px at 10% 0%, rgba(124,58,237,.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow:
+        0 14px 30px rgba(0,0,0,.28),
+        inset 0 1px 0 rgba(255,255,255,.10);
+      border-radius: 16px;
+      padding:14px 14px;
+      overflow:hidden;
+      min-width:0;
+    }
+    .kpi .label{
+      color:rgba(233,236,247,.72);
+      font-size:12px;
+      letter-spacing:.2px;
+      word-break:break-word;
+      overflow-wrap:break-word;
+      -webkit-hyphens:auto;
+      hyphens:auto;
+    }
+    .kpi .value{
+      font-size:22px;
+      line-height:1.1;
+      margin-top:6px;
+      font-weight:800;
+      word-break:break-word;
+      overflow-wrap:break-word;
+    }
+    .kpi .hint{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:6px;
+      word-break:break-word;
+      overflow-wrap:break-word;
+    }
+
+    /* Basket */
+    .basketCard{
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(900px 420px at 20% 0%, rgba(59,130,246,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:
+        0 18px 40px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.10);
+    }
+    .basketHead{
+      padding:12px 12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .basketTitle{display:flex;flex-direction:column;gap:1px}
+    .basketTitle strong{font-size:13px;font-weight:700}
+    .basketTitle span{font-size:11px;color:var(--muted)}
+    .dropzone{
+      padding:12px 12px 14px;
+      min-height:140px;
+      display:flex;flex-direction:column;gap:10px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+    }
+    .dropzone.isOver{
+      outline: 2px dashed rgba(124,58,237,.60);
+      outline-offset: -10px;
+      background: rgba(124,58,237,.10);
+    }
+    .dropHint{
+      color:rgba(233,236,247,.7);
+      font-size:12px;
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(0,0,0,.12);
+      border-radius:14px;
+      padding:10px 10px;
+    }
+    .basketItem{
+      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding:10px 10px;
+      overflow:hidden;
+    }
+    .basketItem > div:first-child{
+      min-width:0;
+      flex:1 1 auto;
+      max-width:calc(100% - 120px);
+      overflow:hidden;
+    }
+    .basketItem .name{
+      color:rgba(233,236,247,.92);
+      font-size:13px;
+      line-height:1.35;
+      font-weight:650;
+      word-break:break-word;
+      overflow-wrap:break-word;
+      -webkit-hyphens:auto;
+      hyphens:auto;
+      max-width:100%;
+    }
+    .basketItem .meta{
+      color:rgba(233,236,247,.60);
+      font-size:12px;
+      margin-top:2px;
+      word-break:break-word;
+      max-width:100%;
+    }
+    .basketItem .right{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      flex-shrink:0;
+    }
+    .basketItem .val{
+      font-family:var(--mono);
+      font-weight:850;
+      white-space:nowrap;
+    }
+    .xbtn{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: rgba(233,236,247,.85);
+      width:26px;height:26px;border-radius:10px;
+      cursor:pointer;display:grid;place-items:center;flex:0 0 auto;
+    }
+    .xbtn:hover{background: rgba(255,255,255,.08)}
+    .sumRow{
+      padding:12px 12px;
+      border-top:1px solid rgba(255,255,255,.10);
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+    .sumRow .sum{font-size:18px;font-weight:900;font-family:var(--mono)}
+    .sumRow .small{color:var(--muted);font-size:12px}
+
+    /* Category list */
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.07);
+      overflow:hidden;
+    }
+    .itemTop{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:space-between;
+      padding:12px 12px;
+      cursor:pointer;
+      overflow:hidden;
+    }
+    .itemTop:hover{background: rgba(255,255,255,.05)}
+    .itemName{
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+      min-width:0;
+      flex:1 1 auto;
+      max-width:calc(100% - 100px);
+      overflow:hidden;
+    }
+    .itemName .name{
+      font-weight:700;
+      overflow-wrap:break-word;
+      word-wrap:break-word;
+      word-break:break-word;
+      hyphens:auto;
+      -webkit-hyphens:auto;
+      max-width:100%;
+    }
+    .itemName .meta{
+      color:var(--muted);
+      font-size:12px;
+      overflow-wrap:break-word;
+      word-wrap:break-word;
+      word-break:break-word;
+      max-width:100%;
+    }
+    .amount{
+      font-family:var(--mono);
+      font-weight:900;
+      white-space:nowrap;
+      margin-left:10px;
+      flex-shrink:0;
+      flex-grow:0;
+      flex-basis:auto;
+    }
+    .bar{height:8px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden;margin:0 12px 12px}
+    .bar > div{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg, rgba(124,58,237,.95), rgba(59,130,246,.85), rgba(16,185,129,.85))}
+    .details{
+      display:none;
+      border-top:1px solid rgba(255,255,255,.10);
+      padding:10px 12px 12px;
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    /* Draggable entries */
+    .entryList{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+    .entry{
+      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.14));
+      border: 1px solid rgba(255,255,255,.11);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+      border-radius: 14px;
+      padding:10px 10px;
+      cursor:grab;
+      user-select:none;
+      overflow:hidden;
+    }
+    .entry:active{cursor:grabbing}
+    .entry:hover{
+      border-color: rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.12));
+    }
+    .entry .left{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      min-width:0;
+      flex:1 1 auto;
+      max-width:calc(100% - 100px);
+      overflow:hidden;
+    }
+    .handle{
+      width:18px;height:18px;opacity:.8;flex:0 0 auto;
+      display:grid;place-items:center;
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:8px;
+      background: rgba(255,255,255,.05);
+      font-size:12px;
+    }
+    .entry .txt{
+      min-width:0;
+      flex:1 1 auto;
+      max-width:100%;
+      overflow:hidden;
+    }
+    .entry .label{
+      color:rgba(233,236,247,.92);
+      font-size:13px;
+      line-height:1.35;
+      word-break:break-word;
+      overflow-wrap:break-word;
+      -webkit-hyphens:auto;
+      hyphens:auto;
+      max-width:100%;
+    }
+    .entry .sub{
+      color:rgba(233,236,247,.55);
+      font-size:12px;
+      margin-top:2px;
+      max-width:100%;
+    }
+    .entry .val{
+      font-family:var(--mono);
+      font-weight:900;
+      white-space:nowrap;
+      flex-shrink:0;
+      flex-grow:0;
+      flex-basis:auto;
+    }
+
+    /* Right side */
+    .rightStack{display:flex;flex-direction:column;gap:14px}
+    canvas{width:100%;height:auto;display:block}
+    .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .leg{
+      display:flex;gap:8px;align-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      border-radius:999px;padding:7px 10px;font-size:12px;color:var(--muted);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .dot{width:10px;height:10px;border-radius:99px;background: rgba(255,255,255,.3)}
+
+    .toast{
+      position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+      background: rgba(0,0,0,.6); border:1px solid rgba(255,255,255,.12);
+      color: var(--text); padding:10px 12px; border-radius: 999px;
+      font-size:12px; display:none;
+      backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Ausgaben-Report</h1>
+      </div>
+      <div class="badgeRow" id="badgeRow"></div>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: Basket (separate column) -->
+      <aside style="position:sticky;top:28px;align-self:start">
+        <div class="basketCard">
+          <div class="basketHead">
+            <div class="basketTitle">
+              <strong>🧲 Sammelkorb</strong>
+              <span style="font-size:11px">Drag & Drop</span>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+              <button class="btn" id="copyBasket" style="padding:7px 10px;font-size:11px">Kopieren</button>
+              <button class="btn" id="clearBasket" style="padding:7px 10px;font-size:11px">Leeren</button>
+            </div>
+          </div>
+
+          <div class="dropzone" id="dropzone">
+            <div class="dropHint" id="dropHint">
+              Zieh Posten hier rein
+            </div>
+            <div id="bucketList"></div>
+          </div>
+
+          <div class="sumRow">
+            <div>
+              <div class="small">Summe</div>
+              <div class="mini" id="bucketCount">0 Posten</div>
+            </div>
+            <div class="sum" id="bucketTotal">0,00 €</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MIDDLE: Categories & Sammelkorb -->
+      <section class="card">
+        <div class="cardHead">
+          <h2>Kategorien & Sammelkorb</h2>
+          <div class="controls">
+            <div class="search" title="Filter nach Kategorie / Händler / Notiz">
+              <span style="opacity:.7">🔎</span>
+              <input id="q" placeholder="Filter… (z.B. Urlaub, Amazon, Lidl, Tanken)" />
+            </div>
+            <label class="pill" title="Nur Top-Kategorien anzeigen">
+              <input type="checkbox" id="topOnly" />
+              <span>Top-8</span>
+            </label>
+            <button class="btn" id="expandAll">Alle öffnen</button>
+            <button class="btn" id="collapseAll">Alle schließen</button>
+          </div>
+        </div>
+
+        <div class="cardBody">
+          <!-- KPIs -->
+          <div class="kpiRow" id="kpis"></div>
+
+          <div class="hr"></div>
+
+          <div class="list" id="list"></div>
+
+          <div class="foot">
+            Hinweis: Amazon "zusammen belastet" siehst du als Einzelposten im Amazon-Block, obwohl es im Karten-Auszug ggf. eine Sammelbuchung war.
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT -->
+      <aside class="rightStack">
+        <section class="card">
+          <div class="cardHead">
+            <h2>Verteilung</h2>
+            <div class="mini" id="chartHint"></div>
+          </div>
+          <div class="cardBody">
+            <canvas id="donut" width="520" height="520" aria-label="Ausgaben-Verteilung (Donut Chart)"></canvas>
+            <div class="legend" id="legend"></div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Kopiert ✅</div>
+
+  <script>
+    // === Data ================================================================
+    const report = {
+      "currency": "EUR",
+      "totalExpenses": 3548.65,
+      "categories": [
+            {
+                  "name": "Wohnen & Möbel",
+                  "total": 1402.13,
+                  "note": "",
+                  "entries": [
+                        [
+                              "HFB ECO IKEA 492 WUPPE",
+                              719.0
+                        ],
+                        [
+                              "NORDICNEST.COM",
+                              257.27
+                        ],
+                        [
+                              "JYSK SE",
+                              252.0
+                        ],
+                        [
+                              "SP METALLBUDE",
+                              153.45
+                        ],
+                        [
+                              "NORDICNEST.COM",
+                              179.84
+                        ],
+                        [
+                              "Rückbuchung: NORDICNEST.COM",
+                              -121.64
+                        ],
+                        [
+                              "Rückbuchung: NORDICNEST.COM",
+                              -6.68
+                        ],
+                        [
+                              "Rückbuchung: NORDICNEST.COM",
+                              -23.34
+                        ],
+                        [
+                              "Rückbuchung: NORDICNEST.COM",
+                              -7.77
+                        ]
+                  ]
+            },
+            {
+                  "name": "Lebensmittel & Supermarkt",
+                  "total": 758.56,
+                  "note": "",
+                  "entries": [
+                        [
+                              "Policks Backstube GmbH",
+                              11.5
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              34.59
+                        ],
+                        [
+                              "ALDI NORD",
+                              14.5
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              3.68
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              8.16
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              2.54
+                        ],
+                        [
+                              "Lidl sagt Danke",
+                              100.41
+                        ],
+                        [
+                              "KAUFLAND WUPPERTAL 271",
+                              40.5
+                        ],
+                        [
+                              "Lidl sagt Danke",
+                              64.78
+                        ],
+                        [
+                              "Lidl sagt Danke",
+                              20.38
+                        ],
+                        [
+                              "Policks Backstube GmbH",
+                              5.29
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              2.86
+                        ],
+                        [
+                              "ALDI NORD",
+                              24.77
+                        ],
+                        [
+                              "akzenta GmbH & Co.KG",
+                              10.56
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              4.54
+                        ],
+                        [
+                              "Policks Backstube GmbH",
+                              6.7
+                        ],
+                        [
+                              "Policks Backstube GmbH",
+                              1.9
+                        ],
+                        [
+                              "Lidl sagt Danke",
+                              8.57
+                        ],
+                        [
+                              "Lidl sagt Danke",
+                              40.53
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              9.99
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              104.58
+                        ],
+                        [
+                              "Lidl sagt Danke",
+                              35.92
+                        ],
+                        [
+                              "Policks Backstube GmbH",
+                              3.9
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              12.43
+                        ],
+                        [
+                              "MUSFELDER FRISCHEMARKT",
+                              3.29
+                        ],
+                        [
+                              "Lidl sagt Danke",
+                              14.42
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              2.68
+                        ],
+                        [
+                              "Lidl sagt Danke",
+                              33.21
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              10.05
+                        ],
+                        [
+                              "akzenta GmbH & Co.KG",
+                              2.94
+                        ],
+                        [
+                              "akzenta GmbH & Co.KG",
+                              6.13
+                        ],
+                        [
+                              "Policks Backstube GmbH",
+                              3.6
+                        ],
+                        [
+                              "EDEKA THIEL 717",
+                              24.14
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              2.31
+                        ],
+                        [
+                              "EDK*EDEKA DUISBURG",
+                              2.69
+                        ],
+                        [
+                              "REWE Heiligenhaus",
+                              8.36
+                        ],
+                        [
+                              "Michael Bruecken K",
+                              10.64
+                        ],
+                        [
+                              "Lidl sagt Danke",
+                              54.03
+                        ],
+                        [
+                              "REWE Essen-Bergerh",
+                              1.94
+                        ],
+                        [
+                              "Doebbe Baeckereien. Fi",
+                              4.55
+                        ]
+                  ]
+            },
+            {
+                  "name": "Amazon",
+                  "total": 351.1,
+                  "note": "",
+                  "entries": [
+                        [
+                              "AMZN Mktp DE*UL0E31MM5",
+                              26.99
+                        ],
+                        [
+                              "Amazon.de*RU7SN3WD5",
+                              20.84
+                        ],
+                        [
+                              "Amazon: CENOVE Blumengarten Spielzeug",
+                              20.78
+                        ],
+                        [
+                              "Amazon: Dunlop Fahrrad Halterung",
+                              7.21
+                        ],
+                        [
+                              "Amazon.de*T20VF66T5",
+                              2.5
+                        ],
+                        [
+                              "AMZN Mktp DE*6N9IQ67Q5",
+                              34.6
+                        ],
+                        [
+                              "AMZN Mktp DE*SY9MV56W5",
+                              25.99
+                        ],
+                        [
+                              "Amazon: Intenso Speed Line 64GB Memory Stick",
+                              5.99
+                        ],
+                        [
+                              "AMZN Mktp DE*0100L5M45",
+                              27.99
+                        ],
+                        [
+                              "Amazon.de*KR7UQ1YO5",
+                              1.75
+                        ],
+                        [
+                              "Amazon.de*UH5VJ9265",
+                              3.8
+                        ],
+                        [
+                              "Amazon: small foot 12398 Besen 'Langstiel'",
+                              11.17
+                        ],
+                        [
+                              "AMZN Mktp DE*Z316W86H4",
+                              136.98
+                        ],
+                        [
+                              "AMZN Mktp DE*ZL2FZ6554",
+                              8.09
+                        ],
+                        [
+                              "Amazon.de*ZL2HY5FB4",
+                              4.04
+                        ],
+                        [
+                              "Amazon: Philips Hue White E27 Lampe",
+                              52.99
+                        ],
+                        [
+                              "AMZN Mktp DE*ZL3GK1OJ4",
+                              66.12
+                        ],
+                        [
+                              "AMZN Mktp DE*ZL1VH81X4",
+                              37.57
+                        ],
+                        [
+                              "Amazon: tesa On & Off Klettband",
+                              4.03
+                        ],
+                        [
+                              "AMZN Mktp DE*ZL6F766L4",
+                              4.99
+                        ],
+                        [
+                              "AMZN Mktp DE*ZL4Q70HM4",
+                              8.49
+                        ],
+                        [
+                              "Rückbuchung: AMZN Mktp DE",
+                              -8.49
+                        ],
+                        [
+                              "Rückbuchung: AMZN Mktp DE",
+                              -4.99
+                        ],
+                        [
+                              "Rückbuchung: AMZN Mktp DE",
+                              -37.57
+                        ],
+                        [
+                              "Rückbuchung: AMZN Mktp DE",
+                              -8.09
+                        ],
+                        [
+                              "Rückbuchung: AMZN Mktp DE",
+                              -30.85
+                        ],
+                        [
+                              "Rückbuchung: AMZN Mktp DE",
+                              -22.14
+                        ],
+                        [
+                              "Rückbuchung: AMZN Mktp DE",
+                              -12.46
+                        ],
+                        [
+                              "Rückbuchung: Amazon.de",
+                              -4.03
+                        ],
+                        [
+                              "Rückbuchung: AMZN Mktp DE",
+                              -33.19
+                        ]
+                  ]
+            },
+            {
+                  "name": "Essen & Trinken (auswärts)",
+                  "total": 268.44,
+                  "note": "",
+                  "entries": [
+                        [
+                              "KP Kuellenhahn",
+                              1.2
+                        ],
+                        [
+                              "KP Kuellenhahn",
+                              1.2
+                        ],
+                        [
+                              "KP Kuellenhahn",
+                              1.2
+                        ],
+                        [
+                              "SP LOWENANTEIL GMBH",
+                              119.22
+                        ],
+                        [
+                              "KP Kuellenhahn",
+                              1.2
+                        ],
+                        [
+                              "SP MAORIKA",
+                              144.42
+                        ]
+                  ]
+            },
+            {
+                  "name": "Kleidung",
+                  "total": 213.92,
+                  "note": "",
+                  "entries": [
+                        [
+                              "Zala ndo Pay",
+                              32.25
+                        ],
+                        [
+                              "H&M DE0058",
+                              5.98
+                        ],
+                        [
+                              "Ernsting's family 0001",
+                              169.3
+                        ],
+                        [
+                              "MGP*Vinted",
+                              6.39
+                        ]
+                  ]
+            },
+            {
+                  "name": "DM (Drogerie)",
+                  "total": 89.34,
+                  "note": "",
+                  "entries": [
+                        [
+                              "dm.de sagt Danke",
+                              74.32
+                        ],
+                        [
+                              "DM-Drogerie Markt",
+                              15.02
+                        ]
+                  ]
+            },
+            {
+                  "name": "Sport",
+                  "total": 74.96,
+                  "note": "",
+                  "entries": [
+                        [
+                              "DECATHLON Deutschland",
+                              34.99
+                        ],
+                        [
+                              "DECATHLON Deutschland",
+                              39.97
+                        ]
+                  ]
+            },
+            {
+                  "name": "Abos & Digital",
+                  "total": 55.1,
+                  "note": "",
+                  "entries": [
+                        [
+                              "PAYPAL *SCRIBD.COM 667",
+                              10.99
+                        ],
+                        [
+                              "PAYPAL *ITUNESAPPST AP",
+                              2.99
+                        ],
+                        [
+                              "APPLE.COM/BILL",
+                              19.99
+                        ],
+                        [
+                              "PAYPAL *RTLINTERACT BK",
+                              7.99
+                        ],
+                        [
+                              "NAVIGRAPH",
+                              10.77
+                        ],
+                        [
+                              "PAYPAL *GETSAFEDIGI",
+                              2.37
+                        ]
+                  ]
+            },
+            {
+                  "name": "Gesundheit",
+                  "total": 46.59,
+                  "note": "",
+                  "entries": [
+                        [
+                              "NEUMARKT APOTHEKE",
+                              24.24
+                        ],
+                        [
+                              "NEUMARKT APOTHEKE",
+                              18.6
+                        ],
+                        [
+                              "Hahnerberg-Apotheke",
+                              3.75
+                        ]
+                  ]
+            },
+            {
+                  "name": "Internet/Telekom",
+                  "total": 29.0,
+                  "note": "",
+                  "entries": [
+                        [
+                              "STARLINK INTERNET",
+                              29.0
+                        ]
+                  ]
+            },
+            {
+                  "name": "Tanken",
+                  "total": 24.76,
+                  "note": "",
+                  "entries": [
+                        [
+                              "Aral Tankstelle 282864",
+                              24.76
+                        ]
+                  ]
+            },
+            {
+                  "name": "Haus & Garten (Baumarkt)",
+                  "total": 18.78,
+                  "note": "",
+                  "entries": [
+                        [
+                              "OBI SAGT DANKE",
+                              18.78
+                        ]
+                  ]
+            },
+            {
+                  "name": "Gebühren",
+                  "total": 11.5,
+                  "note": "",
+                  "entries": [
+                        [
+                              "monatlicher Kartenpreis",
+                              11.5
+                        ]
+                  ]
+            },
+            {
+                  "name": "Hobby & Basteln",
+                  "total": 5.58,
+                  "note": "",
+                  "entries": [
+                        [
+                              "Idee.Creativmarkt GmbH",
+                              5.58
+                        ]
+                  ]
+            },
+            {
+                  "name": "Freizeit & Tickets",
+                  "total": 4.5,
+                  "note": "",
+                  "entries": [
+                        [
+                              "FC SCHALKE 04 ARENA MA",
+                              4.5
+                        ]
+                  ]
+            },
+            {
+                  "name": "Parken",
+                  "total": 3.0,
+                  "note": "",
+                  "entries": [
+                        [
+                              "parco-app.de",
+                              3.0
+                        ]
+                  ]
+            },
+            {
+                  "name": "Versand & Post",
+                  "total": 1.8,
+                  "note": "",
+                  "entries": [
+                        [
+                              "Deutsche Post AG",
+                              1.8
+                        ]
+                  ]
+            },
+            {
+                  "name": "Sonstiges",
+                  "total": 189.59,
+                  "note": "",
+                  "entries": [
+                        [
+                              "3787 Wuppertal-Unterba",
+                              13.73
+                        ],
+                        [
+                              "PAYPAL *ZOOROYALPET",
+                              47.56
+                        ],
+                        [
+                              "PAYPAL *michael.schulz",
+                              5.0
+                        ],
+                        [
+                              "SumUp  *Pianoservice M",
+                              120.0
+                        ],
+                        [
+                              "PAYPAL *melli.sanders",
+                              3.3
+                        ]
+                  ]
+            },
+            {
+                  "name": "Urlaub",
+                  "total": 0.0,
+                  "note": "",
+                  "entries": []
+            }
+      ]
+};
+
+    // === Helpers =============================================================
+    const fmt = (n) => new Intl.NumberFormat("de-DE", { style:"currency", currency: report.currency }).format(n);
+    const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[m]));
+    }
+    function escapeAttr(s){ return escapeHtml(s).replace(/"/g, "&quot;"); }
+
+    function toast(msg="Kopiert ✅"){
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.style.display = "block";
+      clearTimeout(toast._t);
+      toast._t = setTimeout(()=> el.style.display="none", 1300);
+    }
+
+    // === Derived =============================================================
+    const categoriesSorted = [...report.categories].sort((a,b)=> b.total - a.total);
+    const total = report.totalExpenses;
+
+    // === Header badges =======================================================
+    const badgeRow = document.getElementById("badgeRow");
+    const vacation = report.categories.find(c => c.name.startsWith("Urlaub"));
+    const vacationPct = (vacation.total / total) * 100;
+
+    const badges = [
+      { label: "Gesamtausgaben", value: fmt(total) },
+      { label: "Kategorien", value: String(report.categories.length) },
+      { label: "Urlaub", value: `${fmt(vacation.total)} (${vacationPct.toFixed(1)}%)` },
+    ];
+    badgeRow.innerHTML = badges.map(b =>
+      `<div class="badge"><span>${b.label}: </span><strong>${b.value}</strong></div>`
+    ).join("");
+
+    // === KPIs ================================================================
+    const kpis = document.getElementById("kpis");
+    const top3 = categoriesSorted.slice(0,3);
+    const top3sum = top3.reduce((s,c)=> s+c.total, 0);
+    const rest = total - top3sum;
+
+    const kpiData = [
+      { label: "Top-3 zusammen", value: fmt(top3sum), hint: `${(top3sum/total*100).toFixed(1)}% der Ausgaben` },
+      { label: "Urlaub-Anteil", value: fmt(vacation.total), hint: `${vacationPct.toFixed(1)}% der Ausgaben` },
+      { label: "Rest", value: fmt(rest), hint: `${(rest/total*100).toFixed(1)}% verteilt` },
+    ];
+    kpis.innerHTML = kpiData.map(k => `
+      <div class="kpi">
+        <div class="label">${k.label}</div>
+        <div class="value">${k.value}</div>
+        <div class="hint">${k.hint}</div>
+      </div>
+    `).join("");
+
+    // === Drag & Drop Basket ==================================================
+    const dropzone = document.getElementById("dropzone");
+    const bucketList = document.getElementById("bucketList");
+    const bucketTotalEl = document.getElementById("bucketTotal");
+    const bucketCountEl = document.getElementById("bucketCount");
+    const dropHint = document.getElementById("dropHint");
+
+    const basket = []; // {id,label,amount,category}
+
+    function updateBasketUI(){
+      const sum = basket.reduce((s,x)=> s + x.amount, 0);
+      bucketTotalEl.textContent = fmt(sum);
+      bucketCountEl.textContent = `${basket.length} Posten`;
+      dropHint.style.display = basket.length ? "none" : "block";
+
+      bucketList.innerHTML = basket.map((x) => `
+        <div class="basketItem" data-id="${escapeAttr(x.id)}">
+          <div style="min-width:0">
+            <div class="name">${escapeHtml(x.label)}</div>
+            <div class="meta">${escapeHtml(x.category)}</div>
+          </div>
+          <div class="right">
+            <div class="val">${fmt(x.amount)}</div>
+            <button class="xbtn" title="Entfernen" aria-label="Entfernen">×</button>
+          </div>
+        </div>
+      `).join("");
+
+      bucketList.querySelectorAll(".basketItem .xbtn").forEach(btn=>{
+        btn.addEventListener("click", (e)=>{
+          const item = e.target.closest(".basketItem");
+          const id = item.getAttribute("data-id");
+          const idx = basket.findIndex(b => b.id === id);
+          if (idx >= 0) basket.splice(idx, 1);
+          updateBasketUI();
+        });
+      });
+    }
+
+    function addToBasket(payload){
+      basket.push({
+        id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()),
+        label: payload.label,
+        amount: payload.amount,
+        category: payload.category
+      });
+      updateBasketUI();
+    }
+
+    function setOver(on){ dropzone.classList.toggle("isOver", !!on); }
+
+    dropzone.addEventListener("dragover", (e)=>{ e.preventDefault(); setOver(true); });
+    dropzone.addEventListener("dragleave", ()=> setOver(false));
+    dropzone.addEventListener("drop", (e)=>{
+      e.preventDefault();
+      setOver(false);
+      const raw = e.dataTransfer.getData("application/json");
+      if(!raw) return;
+      try{
+        const payload = JSON.parse(raw);
+        if(typeof payload.amount !== "number" || !payload.label) return;
+        addToBasket(payload);
+      }catch(_){}
+    });
+
+    document.getElementById("clearBasket").addEventListener("click", ()=>{
+      basket.length = 0;
+      updateBasketUI();
+    });
+
+    document.getElementById("copyBasket").addEventListener("click", async ()=>{
+      const sum = basket.reduce((s,x)=> s + x.amount, 0);
+      const text =
+        `Sammelkorb (${basket.length} Posten) – Summe: ${fmt(sum)}\n` +
+        basket.map(x => `- ${x.category}: ${x.label} (${fmt(x.amount)})`).join("\n");
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("Sammelkorb kopiert ✅");
+      }catch(e){
+        toast("Kopieren nicht möglich");
+      }
+    });
+
+    updateBasketUI();
+
+    // === Categories ==========================================================
+    const listEl = document.getElementById("list");
+    const qEl = document.getElementById("q");
+    const topOnlyEl = document.getElementById("topOnly");
+
+    function renderList(){
+      const q = (qEl.value || "").trim().toLowerCase();
+      let data = [...categoriesSorted];
+
+      if (topOnlyEl.checked) data = data.slice(0,8);
+
+      if (q){
+        data = data.filter(c =>
+          c.name.toLowerCase().includes(q) ||
+          (c.note || "").toLowerCase().includes(q) ||
+          (c.entries || []).some(([k]) => String(k).toLowerCase().includes(q))
+        );
+      }
+
+      const max = Math.max(...data.map(d => d.total), 1);
+
+      listEl.innerHTML = data.map((c, idx) => {
+        const pct = (c.total/total)*100;
+        const barW = clamp((c.total/max)*100, 0, 100);
+        const id = `cat_${idx}_${c.name.replace(/\W+/g,'_')}`;
+        const entries = c.entries || [];
+        const meta = `${pct.toFixed(1)}%`;
+
+        const entryRows = entries.map(([label, amount]) => {
+          const payload = { label, amount: Number(amount), category: c.name };
+          const json = escapeAttr(JSON.stringify(payload));
+          return `
+            <div class="entry" draggable="true" data-json="${json}">
+              <div class="left">
+                <div class="handle" title="Drag">⠿</div>
+                <div class="txt">
+                  <div class="label">${escapeHtml(label)}</div>
+                </div>
+              </div>
+              <div class="val">${fmt(amount)}</div>
+            </div>
+          `;
+        }).join("");
+
+        const detailHtml = `
+          <div class="details" id="${id}_d">
+            <div>
+              <strong style="color:rgba(233,236,247,.92)">Einzelposten</strong>
+              <span style="font-family:var(--mono)">(${entries.length})</span>
+              <span class="mini" style="margin-left:8px">→ Drag & Drop möglich</span>
+            </div>
+            ${entries.length ? `<div class="entryList">${entryRows}</div>` : `<div style="margin-top:8px">Keine Einzelposten hinterlegt.</div>`}
+          </div>
+        `;
+
+        return `
+          <div class="item" data-open="0">
+            <div class="itemTop" id="${id}">
+              <div class="itemName">
+                <div class="name">${escapeHtml(c.name)}</div>
+                <div class="meta">${escapeHtml(meta)}</div>
+              </div>
+              <div class="amount">${fmt(c.total)}</div>
+            </div>
+            <div class="bar"><div style="width:${barW.toFixed(1)}%"></div></div>
+            ${detailHtml}
+          </div>
+        `;
+      }).join("");
+
+      // toggle + bind dnd
+      document.querySelectorAll(".itemTop").forEach(top => {
+        top.addEventListener("click", () => {
+          const item = top.closest(".item");
+          const d = item.querySelector(".details");
+          const open = item.getAttribute("data-open") === "1";
+          item.setAttribute("data-open", open ? "0" : "1");
+          d.style.display = open ? "none" : "block";
+          if(!open) attachEntryDnD(d);
+        });
+      });
+
+      // If already open somehow
+      document.querySelectorAll(".details").forEach(attachEntryDnD);
+    }
+
+    function attachEntryDnD(container){
+      if(!container) return;
+      container.querySelectorAll(".entry[draggable='true']").forEach(el=>{
+        if(el.dataset.bound === "1") return;
+        el.dataset.bound = "1";
+        el.addEventListener("dragstart", (e)=>{
+          const raw = el.getAttribute("data-json");
+          if(!raw) return;
+          e.dataTransfer.setData("application/json", raw);
+          e.dataTransfer.effectAllowed = "copy";
+        });
+      });
+    }
+
+    qEl.addEventListener("input", renderList);
+    topOnlyEl.addEventListener("change", renderList);
+
+    document.getElementById("expandAll").addEventListener("click", () => {
+      document.querySelectorAll(".item").forEach(item => {
+        item.setAttribute("data-open","1");
+        const d = item.querySelector(".details");
+        d.style.display = "block";
+        attachEntryDnD(d);
+      });
+    });
+    document.getElementById("collapseAll").addEventListener("click", () => {
+      document.querySelectorAll(".item").forEach(item => {
+        item.setAttribute("data-open","0");
+        item.querySelector(".details").style.display = "none";
+      });
+    });
+
+    renderList();
+
+    // === Donut chart =========================================================
+    const canvas = document.getElementById("donut");
+    const ctx = canvas.getContext("2d");
+
+    // Better color palette with more distinct colors
+    const colorPalette = [
+      { h: 280, s: 75, l: 60 },  // Purple
+      { h: 340, s: 80, l: 55 },  // Pink/Red
+      { h: 25, s: 85, l: 55 },   // Orange
+      { h: 50, s: 90, l: 50 },   // Yellow
+      { h: 160, s: 70, l: 45 },  // Teal
+      { h: 210, s: 75, l: 55 },  // Blue
+      { h: 120, s: 60, l: 45 },  // Green
+      { h: 190, s: 70, l: 50 },  // Cyan
+      { h: 0, s: 70, l: 55 },    // Red
+      { h: 260, s: 65, l: 60 },  // Violet
+    ];
+
+    let chartSegments = [];
+    let hoveredSegment = null;
+
+    function drawDonut(){
+      const W = canvas.width, H = canvas.height;
+      const cx = W/2, cy = H/2;
+      const rOuter = Math.min(W,H) * 0.40;
+      const rInner = rOuter * 0.62;
+
+      ctx.clearRect(0,0,W,H);
+
+      // background ring
+      ctx.beginPath();
+      ctx.arc(cx,cy,rOuter,0,Math.PI*2);
+      ctx.arc(cx,cy,rInner,0,Math.PI*2,true);
+      ctx.closePath();
+      ctx.fillStyle = "rgba(255,255,255,.05)";
+      ctx.fill();
+
+      const data = categoriesSorted.slice(0,9);
+      const other = total - data.reduce((s,c)=> s+c.total, 0);
+      const chartData = other > 0.01 ? [...data, {name:"Rest (weitere)", total: other}] : data;
+
+      chartSegments = [];
+      let start = -Math.PI/2;
+
+      chartData.forEach((c, i) => {
+        const angle = (c.total/total) * Math.PI*2;
+        const color = colorPalette[i % colorPalette.length];
+        const isHovered = hoveredSegment === i;
+
+        // Use solid color instead of gradient
+        const brightness = isHovered ? 1.15 : 1;
+        ctx.fillStyle = `hsla(${color.h}, ${color.s}%, ${color.l * brightness}%, .95)`;
+
+        // Draw segment
+        const outerRadius = isHovered ? rOuter + 5 : rOuter;
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.arc(cx,cy,outerRadius,start,start+angle);
+        ctx.closePath();
+        ctx.fill();
+
+        // Store segment info for hit detection
+        chartSegments.push({
+          startAngle: start,
+          endAngle: start + angle,
+          name: c.name,
+          amount: c.total,
+          color: color,
+          index: i
+        });
+
+        // punch inner hole
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.beginPath();
+        ctx.arc(cx,cy,rInner,0,Math.PI*2);
+        ctx.fill();
+        ctx.globalCompositeOperation = "source-over";
+
+        start += angle;
+      });
+
+      // center label
+      ctx.fillStyle = "rgba(233,236,247,.95)";
+      ctx.font = "800 32px " + getComputedStyle(document.body).fontFamily;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      
+      if (hoveredSegment !== null && chartSegments[hoveredSegment]) {
+        const seg = chartSegments[hoveredSegment];
+        ctx.font = "700 18px " + getComputedStyle(document.body).fontFamily;
+        ctx.fillText(seg.name, cx, cy - 15);
+        ctx.font = "800 24px " + getComputedStyle(document.body).fontFamily;
+        ctx.fillText(fmt(seg.amount), cx, cy + 15);
+      } else {
+        ctx.fillText(fmt(total), cx, cy - 10);
+        ctx.fillStyle = "rgba(233,236,247,.65)";
+        ctx.font = "600 14px " + getComputedStyle(document.body).fontFamily;
+        ctx.fillText("Gesamtausgaben", cx, cy + 22);
+      }
+
+      // legend
+      const legend = document.getElementById("legend");
+      legend.innerHTML = chartData.slice(0,8).map((c,i)=> {
+        const color = colorPalette[i % colorPalette.length];
+        return `<div class="leg">
+          <span class="dot" style="background: hsl(${color.h}, ${color.s}%, ${color.l}%)"></span>
+          <span>${escapeHtml(c.name)}</span>
+          <span style="margin-left:6px;font-family:var(--mono)">${(c.total/total*100).toFixed(1)}%</span>
+        </div>`;
+      }).join("");
+
+      document.getElementById("chartHint").textContent =
+        `Chart zeigt Top-${Math.min(9, categoriesSorted.length)} + Rest`;
+    }
+
+    // Mouse interaction
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const dx = x - cx;
+      const dy = y - cy;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const rOuter = Math.min(canvas.width, canvas.height) * 0.40;
+      const rInner = rOuter * 0.62;
+
+      // Check if mouse is in the ring
+      if (distance >= rInner && distance <= rOuter + 10) {
+        // Calculate angle from center (0 = right, increases counter-clockwise)
+        let angle = Math.atan2(dy, dx);
+        // Normalize to 0-2π range
+        if (angle < 0) angle += Math.PI * 2;
+
+        let foundSegment = null;
+        chartSegments.forEach((seg, i) => {
+          let start = seg.startAngle;
+          let end = seg.endAngle;
+          
+          // Normalize segment angles to 0-2π range
+          while (start < 0) start += Math.PI * 2;
+          while (end < 0) end += Math.PI * 2;
+          while (start >= Math.PI * 2) start -= Math.PI * 2;
+          while (end >= Math.PI * 2) end -= Math.PI * 2;
+
+          // Check if angle is within segment
+          if (start <= end) {
+            // Normal case: segment doesn't wrap around
+            if (angle >= start && angle <= end) {
+              foundSegment = i;
+            }
+          } else {
+            // Segment wraps around 0/2π
+            if (angle >= start || angle <= end) {
+              foundSegment = i;
+            }
+          }
+        });
+
+        if (foundSegment !== hoveredSegment) {
+          hoveredSegment = foundSegment;
+          canvas.style.cursor = foundSegment !== null ? 'pointer' : 'default';
+          drawDonut();
+        }
+      } else {
+        if (hoveredSegment !== null) {
+          hoveredSegment = null;
+          canvas.style.cursor = 'default';
+          drawDonut();
+        }
+      }
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      if (hoveredSegment !== null) {
+        hoveredSegment = null;
+        canvas.style.cursor = 'default';
+        drawDonut();
+      }
+    });
+
+    drawDonut();
+  </script>
+</body>
+</html>
